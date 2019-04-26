@@ -59,6 +59,20 @@ public class Node2<T> {
      this(null, value, null);
    } // Node2(T)
 
+  // +-----------------+---------------------------------------------
+  // | Factory methods |
+  // +-----------------+
+
+  /**
+   * Create a dummy node.
+   */
+  public static <T> Node2<T> dummyNode() {
+    Node2<T> dummy = new Node2<T>(null);
+    dummy.prev = dummy;
+    dummy.next = dummy;
+    return dummy;
+  } // dummyNode()
+
   // +---------+-----------------------------------------------------
   // | Methods |
   // +---------+
@@ -66,7 +80,7 @@ public class Node2<T> {
   /**
    * Insert a new value after this node.  Returns the new node.
    */
-  Node2<T> insertAfter(T value) {
+  public Node2<T> insertAfter(T value) {
     Node2<T> tmp = new Node2<T>(this, value, this.next);
     if (this.next != null) {
       this.next.prev = tmp;
@@ -78,7 +92,7 @@ public class Node2<T> {
   /**
    * Insert a new value before this node.  Returns the new node.
    */
-  Node2<T> insertBefore(T value) {
+  public Node2<T> insertBefore(T value) {
     Node2<T> tmp = new Node2<T>(this.prev, value, this);
     if (this.prev != null) {
       this.prev.next = tmp;
@@ -86,11 +100,25 @@ public class Node2<T> {
     this.prev = tmp;
     return tmp;
   } // insertBefore
+  
+  /**
+   * Get the next node.
+   */
+  public Node2<T> next() {
+    return this.next;
+  } // next()
+  
+  /**
+   * Get the previous node.
+   */
+  public Node2<T> prev() {
+    return this.prev;
+  } // prev()
 
   /**
    * Remove this node.
    */
-  void remove() {
+  public void remove() {
     if (this.prev != null) {
       this.prev.next = this.next;
     }
@@ -100,5 +128,21 @@ public class Node2<T> {
     this.prev = null;
     this.next = null;
   } // remove()
+  
+  /**
+   * Set the value in the node.
+   */
+  public T setValue(T value) {
+    T oldValue = this.value;
+    this.value = value;
+    return oldValue;
+  } // setValue(T)
+   
+  /**
+   * Get the value in the node.
+   */
+  public T value() {
+    return this.value;
+  } // value()
 
 } // Node2<T>
