@@ -1,17 +1,18 @@
 package problem1;
 
 import java.io.PrintWriter;
+
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.function.BiConsumer;
 
-import utils.SimpleMap;
 import utils.SimpleStack;
 import utils.Pair;
 
 /**
  * A simple implementation of binary search trees.
  */
-public class SimpleImmutableBST<K, V> implements SimpleMap<K< V> {
+public class SimpleImmutableBST<K, V> implements Iterable<Pair<K,V>> {
 
   // +--------+------------------------------------------------------
   // | Fields |
@@ -93,12 +94,7 @@ public class SimpleImmutableBST<K, V> implements SimpleMap<K< V> {
    public void forEach(BiConsumer<? super K, ? super V> action) {
     forEach(this.root, action);
   } // forEach
-
-  /**
-   * Iterate the keys.
-   */
-
-  
+ 
   /**
    * Determine the size of a subtree rooted at a 
    * particular node.
@@ -122,22 +118,23 @@ public class SimpleImmutableBST<K, V> implements SimpleMap<K< V> {
   public Iterator<Pair<K,V>> iterator() {
     return new Iterator<Pair<K,V>>() {
       // A stack of nodes and pairs
-      SimpleStack<Object> remaining = new SimpleStack<Object>(this.root);
+      SimpleStack<Object> remaining = new SimpleStack<Object>(SimpleImmutableBST.this.root);
 
       public boolean hasNext() {
         return !remaining.isEmpty();
       } // hasNext()
 
+      @SuppressWarnings("unchecked")
       public Pair<K,V> next() {
         Object obj = remaining.get();
-        if (obj instanceof(ImmutableNode<K,V>)) {
+        if (obj instanceof ImmutableNode<?,?>) {
           ImmutableNode<K,V> node = (ImmutableNode<K,V>) obj;
-          push(node.right());
-          push(node.contents());
-          push(node.left());
+          remaining.put(node.right());
+          remaining.put(node.contents());
+          remaining.put(node.left());
           return next();
         } else {
-          return (<Pair<K,V>>) obj;
+          return (Pair<K,V>) obj;
         } // ifelse
       } // next()
     }; // new Iterator
@@ -197,7 +194,7 @@ public class SimpleImmutableBST<K, V> implements SimpleMap<K< V> {
       return find(key, node.left());
     } else {
       return find(key, node.right());
-    } /if/else
+    } // if/else
   } // find(K, ImmuableNode<K,V>)
 
   /** 
