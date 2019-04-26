@@ -99,10 +99,15 @@ public class Node2<T> {
    * Remove this node.
    */
   public void remove() {
+    // Remember the next and prev
     Node2<T> next = this.next;
     Node2<T> prev = this.prev;
-    this.prev.next = next;
-    this.next.prev = prev;
+    // Clear them out
+    this.next = null;
+    this.prev = null;
+    // Set their pointers
+    next.prev = prev;
+    prev.next = next;
   } // remove()
   
   /**
