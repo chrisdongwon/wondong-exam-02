@@ -1,3 +1,5 @@
+package problem3;
+
 import java.io.PrintWriter;
 
 /**
@@ -14,8 +16,8 @@ public class TrieExperiment {
   /**
    * Get the value for a key.
    */
-  void get(PrintWriter pen, Trie trie, String key) {
-    pen.print("key -> ");
+  static void get(PrintWriter pen, Trie trie, String key) {
+    pen.print("get(" + key + ") -> ");
     try {
       pen.println(trie.get(key));
     } catch (Exception e) {
@@ -26,27 +28,27 @@ public class TrieExperiment {
   /**
    * Remove a key, reporting on the action
    */
-  void remove(PrintWriter pen, Trie trie, String key) {
+  static void remove(PrintWriter pen, Trie trie, String key) {
     pen.println("Removing " + key);
     trie.remove(key);
-    trie.dump();
+    trie.dump(pen);
     pen.println();
   } // remove(PrintWriter, Trie, String)
 
   /**
    * Set a key (with a generated value), reporting the step.
    */
-  void set(PrintWriter pen, Trie trie, String key) {
+  static void set(PrintWriter pen, Trie trie, String key) {
     set(pen, trie, key, key);
   } // set(PrintWriter, Trie, String)
 
   /**
    * Set a key/value pair, reporting the step.
    */
-  void set(PrintWriter pen, Trie trie, String key, String value) {
+  static void set(PrintWriter pen, Trie trie, String key, String value) {
     pen.println("Setting " + key + " to " + value);
     trie.set(key, value);
-    trie.dump();
+    trie.dump(pen);
     pen.println();
   } // set
 

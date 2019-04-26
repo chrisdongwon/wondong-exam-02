@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.function.BiConsumer;
 
+import utils.MiscUtils;
 import utils.Pair;
 import utils.SimpleMap;
 import utils.SimpleStack;
@@ -181,9 +182,9 @@ public class Trie
     if (node == null) {
       return;
     } // if (node == null)
-    for (int i = 0; i < node.next.length-1; i++) {
-      TrieNode next = nodes.next[i];
-      String prefix = indent + Character.toString('A' + i));
+    for (char ch = 'A'; ch <= 'Z'; ch++) {
+      TrieNode next = node.next(ch);
+      String prefix = indent + ch;
       if (next != null) {
         if ((node.contents != null) && (node.contents.key() != null)) {
           pen.println(prefix + ": " + node);

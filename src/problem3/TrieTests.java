@@ -1,4 +1,4 @@
-package problem4;
+package problem3;
 
 import utils.SimpleMapTests;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,5 +13,6 @@ public class TrieTests extends SimpleMapTests {
   @BeforeEach
   public void setupTrieTests() {
     stringMap = new Trie();
+    runIteratorTests = false;
   } // setupTrieTests()
 } // class TrieTests
