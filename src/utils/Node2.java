@@ -36,26 +36,10 @@ public class Node2<T> {
     this.next = next;
   } // Node2(Node2<T>, T, Node2<T>)
 
-  /**
-   * Create a new node with no previous link.  (E.g., the front
-   * of some kinds of lists.)
-   */
-  public Node2(T value, Node2<T> next) {
-    this(null, value, next);
-  } // Node2(T, Node2<T>)
-
-  /**
-   * Create a new node with no next link.  (Included primarily
-   * for symmetry.)
-   */
-  public Node2(Node2<T> prev, T value) {
-    this(prev, value, null);
-  } // Node2(Node2<T>, T)
-
-  /**
-   * Create a new node with no links.
-   */
-   public Node2(T value) {
+   /**
+    * Create a new node with no links.
+    */
+   private Node2(T value) {
      this(null, value, null);
    } // Node2(T)
 
@@ -82,9 +66,7 @@ public class Node2<T> {
    */
   public Node2<T> insertAfter(T value) {
     Node2<T> tmp = new Node2<T>(this, value, this.next);
-    if (this.next != null) {
-      this.next.prev = tmp;
-    } // if
+    this.next.prev = tmp;
     this.next = tmp;
     return tmp;
   } // insertAfter
@@ -94,9 +76,7 @@ public class Node2<T> {
    */
   public Node2<T> insertBefore(T value) {
     Node2<T> tmp = new Node2<T>(this.prev, value, this);
-    if (this.prev != null) {
-      this.prev.next = tmp;
-    } // if
+    this.prev.next = tmp;
     this.prev = tmp;
     return tmp;
   } // insertBefore
@@ -119,14 +99,10 @@ public class Node2<T> {
    * Remove this node.
    */
   public void remove() {
-    if (this.prev != null) {
-      this.prev.next = this.next;
-    }
-    if (this.next != null) {
-      this.next.prev = this.prev;
-    }
-    this.prev = null;
-    this.next = null;
+    Node2<T> next = this.next;
+    Node2<T> prev = this.prev;
+    this.prev.next = next;
+    this.next.prev = prev;
   } // remove()
   
   /**
