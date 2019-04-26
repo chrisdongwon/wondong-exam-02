@@ -1,11 +1,9 @@
 package utils;
 
 import java.io.PrintWriter;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,8 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
  * I've done).
  *
  * It is intended that you will subclass this class and implement the
- * a @BeforeEach method which will initialize the stringMap field.
- * For example,
+ * a @BeforeEach method which will initialize the stringMap field. For example,
  *
  * <pre>
  * &#64;BeforeEach
@@ -73,12 +70,12 @@ public class SimpleMapTests {
   /**
    * Do we run all the iterator tests?
    */
-  boolean runIteratorTests = true;
+  protected boolean runIteratorTests = true;
 
   /**
    * Do we run the iterator tests that involve removal?
    */
-  boolean runIteratorRemoveTests = true;
+  protected boolean runIteratorRemoveTests = true;
 
   /**
    * A random number generator for the randomized tests.
@@ -88,7 +85,7 @@ public class SimpleMapTests {
   /**
    * A of stringMap for tests. (Gets set by the subclasses.)
    */
-  SimpleMap<String, String> stringMap;
+  protected SimpleMap<String, String> stringMap;
 
   /**
    * For reporting errors: a list of the operations we performed.
@@ -294,7 +291,7 @@ public class SimpleMapTests {
       if (!stringMap.containsKey(key.toString())) {
         log("contains(" + key + ") failed");
         printTest();
-        stringMap.dump();
+        stringMap.dump(new PrintWriter(System.out, true));
         fail(key + " is not in the map");
       } // if (!stringMap.contains(val))
     } // for key
@@ -343,7 +340,7 @@ public class SimpleMapTests {
     // Dump the instructions if we've encountered an error
     if (!ok) {
       printTest();
-      stringMap.dump();
+      stringMap.dump(new PrintWriter(System.out, true));
       fail("Operations failed");
     } // if (!ok)
   } // randomTest()
@@ -389,8 +386,8 @@ public class SimpleMapTests {
       return;
     } // if
 
-    stringMap.set("A","A");
-    Iterator<Pair<String,String>> si = stringMap.iterator();
+    stringMap.set("A", "A");
+    Iterator<Pair<String, String>> si = stringMap.iterator();
     si.next();
     si.remove();
     assertTrue(stringMap.size() == 0);
@@ -404,28 +401,30 @@ public class SimpleMapTests {
     } // if
 
     // Removing from an empty array
-    assertThrows(java.lang.Exception.class, () -> stringMap.iterator().remove());
+    assertThrows(java.lang.Exception.class,
+        () -> stringMap.iterator().remove());
 
     // Removing before iterating
-    stringMap.set("A","A");
-    stringMap.set("B","B");
-    assertThrows(java.lang.Exception.class, () -> stringMap.iterator().remove());
+    stringMap.set("A", "A");
+    stringMap.set("B", "B");
+    assertThrows(java.lang.Exception.class,
+        () -> stringMap.iterator().remove());
 
     // Removing twice in a row
-    stringMap.set("A","A");
-    stringMap.set("B","B");
-    Iterator<Pair<String,String>> sit = stringMap.iterator();
+    stringMap.set("A", "A");
+    stringMap.set("B", "B");
+    Iterator<Pair<String, String>> sit = stringMap.iterator();
     sit.next();
     sit.remove(); // valid
     assertThrows(java.lang.Exception.class, () -> sit.remove());
     assertThrows(java.lang.Exception.class, () -> sit.remove());
 
     // Removing twice in a row later in the stack
-    stringMap.set("A","A");
-    stringMap.set("B","B");
-    stringMap.set("C","C");
-    stringMap.set("D","D");
-    Iterator<Pair<String,String>> sit2 = stringMap.iterator();
+    stringMap.set("A", "A");
+    stringMap.set("B", "B");
+    stringMap.set("C", "C");
+    stringMap.set("D", "D");
+    Iterator<Pair<String, String>> sit2 = stringMap.iterator();
     sit2.next();
     sit2.next();
     sit2.remove(); // valid
@@ -439,15 +438,15 @@ public class SimpleMapTests {
       return;
     } // if
 
-    stringMap.set("A","A");
-    stringMap.set("B","B");
-    stringMap.set("C","C");
-    stringMap.set("D","D");
+    stringMap.set("A", "A");
+    stringMap.set("B", "B");
+    stringMap.set("C", "C");
+    stringMap.set("D", "D");
 
     // Modification by addition
-    Iterator<Pair<String,String>> sit1 = stringMap.iterator();
+    Iterator<Pair<String, String>> sit1 = stringMap.iterator();
     sit1.next();
-    stringMap.set("E","E");
+    stringMap.set("E", "E");
     assertThrows(java.util.ConcurrentModificationException.class,
         () -> sit1.remove());
     assertThrows(java.util.ConcurrentModificationException.class,
@@ -456,7 +455,7 @@ public class SimpleMapTests {
         () -> sit1.next());
 
     // Modification by removal
-    Iterator<Pair<String,String>> sit2 = stringMap.iterator();
+    Iterator<Pair<String, String>> sit2 = stringMap.iterator();
     stringMap.remove("A");
     assertThrows(java.util.ConcurrentModificationException.class,
         () -> sit2.remove());
@@ -466,8 +465,8 @@ public class SimpleMapTests {
         () -> sit2.next());
 
     // Modification by replacement
-    Iterator<Pair<String,String>> sit3 = stringMap.iterator();
-    stringMap.set("B","C");
+    Iterator<Pair<String, String>> sit3 = stringMap.iterator();
+    stringMap.set("B", "C");
     assertThrows(java.util.ConcurrentModificationException.class,
         () -> sit3.remove());
     assertThrows(java.util.ConcurrentModificationException.class,
@@ -476,8 +475,8 @@ public class SimpleMapTests {
         () -> sit3.next());
 
     // Simultaneous modification
-    Iterator<Pair<String,String>> sit4 = stringMap.iterator();
-    Iterator<Pair<String,String>> sit5 = stringMap.iterator();
+    Iterator<Pair<String, String>> sit4 = stringMap.iterator();
+    Iterator<Pair<String, String>> sit5 = stringMap.iterator();
     sit4.next();
     sit4.next();
     sit5.next();
