@@ -1,9 +1,7 @@
 package problem3;
 
 import java.io.PrintWriter;
-
 import java.util.Iterator;
-
 import utils.MiscUtils;
 import utils.Pair;
 import utils.SimpleMap;
@@ -23,7 +21,7 @@ public class Trie
    * The root of the trie.
    */
   TrieNode root;
-  
+
   /**
    * The number of pairs in the tree.
    */
@@ -75,7 +73,8 @@ public class Trie
   } // remove(String)
 
   /**
-   * Iterate all the keys in the tree, returning them in alphabetical order by key.
+   * Iterate all the keys in the tree, returning them in alphabetical order by
+   * key.
    */
   public Iterator<String> keys() {
     return MiscUtils.transform(this.iterator(), (pair) -> pair.key());
@@ -83,7 +82,8 @@ public class Trie
 
   @Override
   /**
-   * Iterate all the values in the tree, returning them in some undetermined order.
+   * Iterate all the values in the tree, returning them in some undetermined
+   * order.
    */
   public Iterator<String> values() {
     return MiscUtils.transform(this.iterator(), (pair) -> pair.value());
@@ -95,14 +95,15 @@ public class Trie
   public void dump(PrintWriter pen) {
     dump(pen, this.root, "");
   } // dump(PrintWriter)
-  
+
   // +------------------+--------------------------------------------
   // | Iterable methods |
   // +------------------+
 
   @Override
   /**
-   * Iterate all the key/value pairs in the tree, returning them in alphabetical order by key.
+   * Iterate all the key/value pairs in the tree, returning them in alphabetical
+   * order by key.
    */
   public Iterator<Pair<String, String>> iterator() {
     return new Iterator<Pair<String, String>>() {
@@ -174,7 +175,7 @@ public class Trie
 
     }; // new Iterator
   } // iterator();
- 
+
   // +---------+-----------------------------------------------------
   // | Helpers |
   // +---------+
@@ -190,30 +191,30 @@ public class Trie
       TrieNode next = node.next(ch);
       String prefix = indent + ch;
       if (next != null) {
-        if ((node.contents != null) && (node.contents.key() != null)) {
-          pen.println(prefix + ": " + node);
+        Pair<String, String> pair = node.contents;
+        if ((pair != null) && (pair.key() != null)) {
+          pen.println(prefix + ": " + pair);
         } else {
           pen.println(prefix);
         } // if/else)
-        dump(pen, next, " " + indent);
+        dump(pen, next, indent + ch + "-");
       } // if
     } // for
   } // dump(PrintWriter, TrieNode, String)
 
   /**
-   * Find the node associated with a key.  Returns null if the
-   * node is not found.
+   * Find the node associated with a key. Returns null if the node is not found.
    */
-   TrieNode find(String key) {
-     int len = key.length();
-     TrieNode current = this.root;
-     for (int i = 0; i < len; i++) {
-       char ch = key.charAt(i);
-       // TODO: Finish implementation
-     } // for
-     return null;
-   } // find
-   
+  TrieNode find(String key) {
+    int len = key.length();
+    TrieNode current = this.root;
+    for (int i = 0; i < len; i++) {
+      char ch = key.charAt(i);
+      // TODO: Finish implementation
+    } // for
+    return null;
+  } // find
+
 } // class Trie
 
 
