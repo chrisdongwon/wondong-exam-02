@@ -5,6 +5,9 @@ import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import utils.Node2;
+import utils.SimpleList;
+
 /**
  * Simple circular doubly-linked lists.
  *
@@ -33,13 +36,8 @@ public class SimpleCircularDLL<T> implements SimpleList<T> {
    * Create an empty list.
    */
   public SimpleCircularDLL() {
-    this.dummy = new Node2<T>(null) {
-      void remove() {
-        throw new RuntimeException("You cannot remove the dummy node.");
-      } // remove()
-    };
-    this.dummy.next = this.dummy;
-    this.dummy.prev = this.dummy;
+    this.dummy = Node2.dummyNode();
+
     this.size = 0;
   } // SimpleCircularDLL
 
@@ -68,7 +66,7 @@ public class SimpleCircularDLL<T> implements SimpleList<T> {
        * A cursor.  This is generally on the node *before* the one
        * that will be returned by next.
        */
-      Node2<T> cursor = this.dummy;
+      Node2<T> cursor = SimpleCircularDLL.this.dummy;
 
       /**
        * The node to be updated by remove or set.  Has a value of
@@ -107,11 +105,11 @@ public class SimpleCircularDLL<T> implements SimpleList<T> {
          throw new NoSuchElementException();
         } // if
         // Identify the node to update
-        this.update = this.cursor.next;
+        this.update = this.cursor.next();
         // Note the movement
         ++this.pos;
         // And return the value
-        return this.update.value;
+        return this.update.value();
       } // next()
 
       public int nextIndex() {
@@ -156,7 +154,7 @@ public class SimpleCircularDLL<T> implements SimpleList<T> {
           throw new IllegalStateException();
         } // if
         // Do the real work
-        this.update.value = val;
+        this.update.setValue(val);
         // Note that no more updates are possible
         this.update = null;
       } // set(T)

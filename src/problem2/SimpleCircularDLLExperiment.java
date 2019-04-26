@@ -8,9 +8,9 @@ import java.io.PrintWriter;
 public class SimpleCircularDLLExperiment {
   public static void main(String[] args) throws Exception {
     PrintWriter pen = new PrintWriter(System.out, true);
-    SimpleListExperiment.expt1(pen, new SimpleDLL<String>());
-    SimpleListExperiment.expt2(pen, new SimpleDLL<String>());
-    SimpleListExperiment.expt3(pen, new SimpleDLL<String>());
+    SimpleListExperiment.expt1(pen, new SimpleCircularDLL<String>());
+    SimpleListExperiment.expt2(pen, new SimpleCircularDLL<String>());
+    SimpleListExperiment.expt3(pen, new SimpleCircularDLL<String>());
     // SimpleListExperiment.expt4(pen, new SimpleDLL<String>(), 3);
   } // main(String[]
 } // SimpleCircularDLLExperiment
