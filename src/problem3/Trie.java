@@ -3,7 +3,6 @@ package problem3;
 import java.io.PrintWriter;
 
 import java.util.Iterator;
-import java.util.function.BiConsumer;
 
 import utils.MiscUtils;
 import utils.Pair;
@@ -24,6 +23,11 @@ public class Trie
    * The root of the trie.
    */
   TrieNode root;
+  
+  /**
+   * The number of pairs in the tree.
+   */
+  int size;
 
   // +--------------+------------------------------------------------
   // | Constructors |
@@ -34,6 +38,7 @@ public class Trie
    */
   public Trie() {
     this.root = new TrieNode();
+    this.size = 0;
   } // Trie()
 
   // +-------------------+-------------------------------------------
@@ -54,8 +59,7 @@ public class Trie
 
   @Override
   public int size() {
-    // TODO Auto-generated method stub
-    return 0;
+    return this.size;
   } // size()
 
   @Override
