@@ -189,9 +189,9 @@ public class Trie
     } // if (node == null)
     for (char ch = 'A'; ch <= 'Z'; ch++) {
       TrieNode next = node.next(ch);
-      String prefix = indent + ch;
       if (next != null) {
-        Pair<String, String> pair = node.contents;
+        String prefix = indent + ch;
+        Pair<String, String> pair = next.contents;
         if ((pair != null) && (pair.key() != null)) {
           pen.println(prefix + ": " + pair);
         } else {
