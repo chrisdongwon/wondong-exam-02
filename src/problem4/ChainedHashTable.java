@@ -1,7 +1,9 @@
 package problem4;
 
 import utils.HashTable;
+import utils.MiscUtils;
 import utils.Pair;
+import utils.Reporter;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -44,19 +46,7 @@ public class ChainedHashTable<K, V> implements HashTable<K, V> {
    * is used to report behind-the-scenes work, such as calls to expand the
    * table.
    * 
-   * Bugs to squash.
-   * 
-   * [ ] Doesn't check for repeated keys in set.
-   * 
-   * [ ] Doesn't look for matching key in get.
-   * 
-   * [ ] Doesn't handle collisions.
-   * 
    * Other features to add.
-   * 
-   * [ ] The `expand` method is not completely implemented.
-   * 
-   * [ ] The `remove` method is not implemented.
    * 
    * [ ] A real implementation of containsKey.
    * 
@@ -290,7 +280,8 @@ public class ChainedHashTable<K, V> implements HashTable<K, V> {
         return null;
       } // next()
 
-      public boolean remove() {
+      public void remove() {
+        // STUB
       } // remove()
     }; // new Iterator
   } // iterator()
