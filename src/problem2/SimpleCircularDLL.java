@@ -87,9 +87,6 @@ public class SimpleCircularDLL<T> implements SimpleList<T> {
 
         // Increase the size
         ++SimpleCircularDLL.this.size;
-
-        // Update the position.
-        ++this.pos;
       } // add(T)
 
       public boolean hasNext() {
@@ -108,6 +105,8 @@ public class SimpleCircularDLL<T> implements SimpleList<T> {
         this.update = this.cursor.next();
         // Note the movement
         ++this.pos;
+        // Advance the cursor
+        this.cursor = this.cursor.next();
         // And return the value
         return this.update.value();
       } // next()
