@@ -195,6 +195,7 @@ public class ChainedHashTable<K, V> implements HashTable<K, V> {
         Pair<K,V> pair = bucket.get(i);
         if (key.equals(pair.key())) {
           bucket.remove(i);
+          --this.size;
           return pair.value();
         } // if
       } // for
@@ -345,6 +346,8 @@ public class ChainedHashTable<K, V> implements HashTable<K, V> {
     Object[] oldBuckets = this.buckets;
     // Create a new table of that size.
     this.buckets = new Object[newSize];
+    // Reset the size because we're about to call set too many times.
+    this.size = 0;
     // Move all values from the old table to their appropriate
     // location in the new table.
     for (int i = 0; i < oldBuckets.length; i++) {
@@ -364,6 +367,10 @@ public class ChainedHashTable<K, V> implements HashTable<K, V> {
    * return the index of an entry we can use to store that key.
    */
   int find(K key) {
+    if (key == null) { 
+      throw new NullPointerException("null key");
+    } // if
+
     return Math.abs(key.hashCode()) % this.buckets.length;
   } // find(K)
 
