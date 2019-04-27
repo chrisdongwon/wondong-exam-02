@@ -11,6 +11,6 @@ public class SimpleCircularDLLExperiment {
     SimpleListExperiment.expt1(pen, new SimpleCircularDLL<String>());
     SimpleListExperiment.expt2(pen, new SimpleCircularDLL<String>());
     SimpleListExperiment.expt3(pen, new SimpleCircularDLL<String>());
-    // SimpleListExperiment.expt4(pen, new SimpleDLL<String>(), 3);
+    SimpleListExperiment.expt4(pen, new SimpleCircularDLL<String>(), 3);
   } // main(String[]
 } // SimpleCircularDLLExperiment
