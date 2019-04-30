@@ -323,7 +323,7 @@ public class SimpleMapTests {
     // Iterate the map
     stringMap.dump(new PrintWriter(System.out, true));
     for (Pair<String, String> pair : stringMap) {
-      System.err.println(pair.key());
+      // System.err.println(pair.key());
       actual.add(pair.key());
     } // for
 
