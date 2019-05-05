@@ -40,7 +40,7 @@ class SimpleImmutableBSTTests {
    * Are we observing steps? (Sometimes print statements are better than a
    * debugger.)
    */
-  static final boolean OBSERVE = true;
+  static final boolean OBSERVE = false;
 
   /**
    * Key/value pairs for the current test.
