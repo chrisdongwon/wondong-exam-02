@@ -312,7 +312,7 @@ public class SimpleMapTests {
     ArrayList<String> expected = new ArrayList<String>();
     ArrayList<String> actual = new ArrayList<String>();
     String[] source = words.clone();
-    // MiscUtils.randomlyPermute(source);
+    MiscUtils.randomlyPermute(source);
 
     // Fill in the map and the array of expected values.
     for (int i = 0; i < source.length; i++) {
