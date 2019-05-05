@@ -75,6 +75,15 @@ class SimpleImmutableBSTTests {
   // +-------+
 
   /**
+   * Check that the new tree is empty.
+   */
+  @Test
+  void testEmpty() {
+    SimpleImmutableBST<String,Integer> tree = new SimpleImmutableBST<String,Integer>();
+    assertEquals(0, tree.size());
+  } // testEmpty()
+  
+  /**
    * Test that setting works correctly.
    */
   @Test
@@ -103,6 +112,7 @@ class SimpleImmutableBSTTests {
 
     // Fill in the trees array by gradually removing elements from
     // the tree.
+    MiscUtils.randomlyPermute(keys);
     trees = new Object[keys.length + 1];
     trees[keys.length] = bst;
     for (int i = keys.length-1; i >= 0; i--) {
