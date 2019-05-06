@@ -9,12 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 /**
- * A simple set of tests for SimpleMaps. Based on experiments that I wrote for
- * hash tables and tests I wrote for skip lists (and, perhaps, some other things
- * I've done).
+ * A simple set of tests for SimpleMaps. Based on experiments that I wrote for hash tables and tests
+ * I wrote for skip lists (and, perhaps, some other things I've done).
  *
- * It is intended that you will subclass this class and implement the
- * a @BeforeEach method which will initialize the stringMap field. For example,
+ * It is intended that you will subclass this class and implement the a @BeforeEach method which
+ * will initialize the stringMap field. For example,
  *
  * <pre>
  * &#64;BeforeEach
@@ -25,11 +24,9 @@ import org.junit.jupiter.api.BeforeEach;
  * 
  * You can turn off all iterator tests by setting runIteratorTests to false.
  * 
- * You can turn off the iterator tests involving removal by setting
- * runIteratorRemoveTests to false.
+ * You can turn off the iterator tests involving removal by setting runIteratorRemoveTests to false.
  *
- * A few of the tests print useful errors when they fail. (Or at least I think
- * they are useful.)
+ * A few of the tests print useful errors when they fail. (Or at least I think they are useful.)
  *
  * @author Samuel A. Rebelsky
  */
@@ -42,12 +39,11 @@ public class SimpleMapTests {
   /**
    * A word list stolen from some tests that SamR wrote in the distant past.
    */
-  static final String[] words = {"aardvark", "anteater", "antelope", "bear",
-      "bison", "buffalo", "chinchilla", "cat", "dingo", "elephant", "eel",
-      "flying squirrel", "fox", "goat", "gnu", "goose", "hippo", "horse",
-      "iguana", "jackalope", "kestrel", "llama", "moose", "mongoose", "nilgai",
-      "orangutan", "opossum", "red fox", "snake", "tarantula", "tiger",
-      "vicuna", "vulture", "wombat", "yak", "zebra", "zorilla"};
+  static final String[] words = {"aardvark", "anteater", "antelope", "bear", "bison", "buffalo",
+      "chinchilla", "cat", "dingo", "elephant", "eel", "flying squirrel", "fox", "goat", "gnu",
+      "goose", "hippo", "horse", "iguana", "jackalope", "kestrel", "llama", "moose", "mongoose",
+      "nilgai", "orangutan", "opossum", "red fox", "snake", "tarantula", "tiger", "vicuna",
+      "vulture", "wombat", "yak", "zebra", "zorilla"};
 
   // +--------+----------------------------------------------------------
   // | Fields |
@@ -107,10 +103,9 @@ public class SimpleMapTests {
    */
   void assertRemove(String str) {
     stringMap.remove(str);
-    assertThrows(java.lang.IndexOutOfBoundsException.class,
-        () -> stringMap.get(str));
+    assertThrows(java.lang.IndexOutOfBoundsException.class, () -> stringMap.get(str));
   } // assertRemove
-  
+
   /**
    * Generate a random key
    */
@@ -179,8 +174,7 @@ public class SimpleMapTests {
   } // simpleTest()
 
   /**
-   * Another simple test. The list should not contain anything when we start
-   * out.
+   * Another simple test. The list should not contain anything when we start out.
    */
   @Test
   public void emptyTest() {
@@ -228,8 +222,7 @@ public class SimpleMapTests {
   // +------------------+
 
   /**
-   * Verify that a randomly created list contains all the values we added to the
-   * list.
+   * Verify that a randomly created list contains all the values we added to the list.
    */
   @Test
   public void testContainsOnlyAdd() {
@@ -312,7 +305,7 @@ public class SimpleMapTests {
     ArrayList<String> expected = new ArrayList<String>();
     ArrayList<String> actual = new ArrayList<String>();
     String[] source = words.clone();
-    // MiscUtils.randomlyPermute(source);
+    MiscUtils.randomlyPermute(source);
 
     // Fill in the map and the array of expected values.
     for (int i = 0; i < source.length; i++) {
@@ -359,14 +352,12 @@ public class SimpleMapTests {
     } // if
 
     // Removing from an empty array
-    assertThrows(java.lang.Exception.class,
-        () -> stringMap.iterator().remove());
+    assertThrows(java.lang.Exception.class, () -> stringMap.iterator().remove());
 
     // Removing before iterating
     stringMap.set("A", "A");
     stringMap.set("B", "B");
-    assertThrows(java.lang.Exception.class,
-        () -> stringMap.iterator().remove());
+    assertThrows(java.lang.Exception.class, () -> stringMap.iterator().remove());
 
     // Removing twice in a row
     stringMap.set("A", "A");
@@ -405,32 +396,23 @@ public class SimpleMapTests {
     Iterator<Pair<String, String>> sit1 = stringMap.iterator();
     sit1.next();
     stringMap.set("E", "E");
-    assertThrows(java.util.ConcurrentModificationException.class,
-        () -> sit1.remove());
-    assertThrows(java.util.ConcurrentModificationException.class,
-        () -> sit1.hasNext());
-    assertThrows(java.util.ConcurrentModificationException.class,
-        () -> sit1.next());
+    assertThrows(java.util.ConcurrentModificationException.class, () -> sit1.remove());
+    assertThrows(java.util.ConcurrentModificationException.class, () -> sit1.hasNext());
+    assertThrows(java.util.ConcurrentModificationException.class, () -> sit1.next());
 
     // Modification by removal
     Iterator<Pair<String, String>> sit2 = stringMap.iterator();
     stringMap.remove("A");
-    assertThrows(java.util.ConcurrentModificationException.class,
-        () -> sit2.remove());
-    assertThrows(java.util.ConcurrentModificationException.class,
-        () -> sit2.hasNext());
-    assertThrows(java.util.ConcurrentModificationException.class,
-        () -> sit2.next());
+    assertThrows(java.util.ConcurrentModificationException.class, () -> sit2.remove());
+    assertThrows(java.util.ConcurrentModificationException.class, () -> sit2.hasNext());
+    assertThrows(java.util.ConcurrentModificationException.class, () -> sit2.next());
 
     // Modification by replacement
     Iterator<Pair<String, String>> sit3 = stringMap.iterator();
     stringMap.set("B", "C");
-    assertThrows(java.util.ConcurrentModificationException.class,
-        () -> sit3.remove());
-    assertThrows(java.util.ConcurrentModificationException.class,
-        () -> sit3.hasNext());
-    assertThrows(java.util.ConcurrentModificationException.class,
-        () -> sit3.next());
+    assertThrows(java.util.ConcurrentModificationException.class, () -> sit3.remove());
+    assertThrows(java.util.ConcurrentModificationException.class, () -> sit3.hasNext());
+    assertThrows(java.util.ConcurrentModificationException.class, () -> sit3.next());
 
     // Simultaneous modification
     Iterator<Pair<String, String>> sit4 = stringMap.iterator();
@@ -439,12 +421,9 @@ public class SimpleMapTests {
     sit4.next();
     sit5.next();
     sit4.remove();
-    assertThrows(java.util.ConcurrentModificationException.class,
-        () -> sit5.remove());
-    assertThrows(java.util.ConcurrentModificationException.class,
-        () -> sit5.hasNext());
-    assertThrows(java.util.ConcurrentModificationException.class,
-        () -> sit5.next());
+    assertThrows(java.util.ConcurrentModificationException.class, () -> sit5.remove());
+    assertThrows(java.util.ConcurrentModificationException.class, () -> sit5.hasNext());
+    assertThrows(java.util.ConcurrentModificationException.class, () -> sit5.next());
   } // testExceptionsModification
 
 } // class SimpleMapTests
