@@ -1,10 +1,8 @@
 package problem2;
 
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
-
 import utils.Node2;
 import utils.SimpleList;
 
@@ -37,7 +35,6 @@ public class SimpleCircularDLL<T> implements SimpleList<T> {
    */
   public SimpleCircularDLL() {
     this.dummy = Node2.dummyNode();
-
     this.size = 0;
   } // SimpleCircularDLL
 
@@ -56,21 +53,18 @@ public class SimpleCircularDLL<T> implements SimpleList<T> {
       // +--------+
 
       /**
-       * The position in the list of the next value to be returned.
-       * Included because ListIterators must provide nextIndex and
-       * prevIndex.
+       * The position in the list of the next value to be returned. Included because ListIterators
+       * must provide nextIndex and prevIndex.
        */
       int pos = 0;
 
       /**
-       * A cursor.  This is generally on the node *before* the one
-       * that will be returned by next.
+       * A cursor. This is generally on the node *before* the one that will be returned by next.
        */
       Node2<T> cursor = SimpleCircularDLL.this.dummy;
 
       /**
-       * The node to be updated by remove or set.  Has a value of
-       * null when there is no such node.
+       * The node to be updated by remove or set. Has a value of null when there is no such node.
        */
       Node2<T> update = null;
 
@@ -79,12 +73,10 @@ public class SimpleCircularDLL<T> implements SimpleList<T> {
       // +---------+
 
       public void add(T val) throws UnsupportedOperationException {
-        // Do the main work
-        // STUB
-
+        this.cursor = this.cursor.insertAfter(val);
+        this.pos++;
         // Note that we cannot update
         this.update = null;
-
         // Increase the size
         ++SimpleCircularDLL.this.size;
       } // add(T)
@@ -99,7 +91,7 @@ public class SimpleCircularDLL<T> implements SimpleList<T> {
 
       public T next() {
         if (!this.hasNext()) {
-         throw new NoSuchElementException();
+          throw new NoSuchElementException();
         } // if
         // Identify the node to update
         this.update = this.cursor.next();
@@ -123,8 +115,10 @@ public class SimpleCircularDLL<T> implements SimpleList<T> {
         if (!this.hasPrevious()) {
           throw new NoSuchElementException();
         } // if
-        // STUB
-        return null;
+        this.update = this.cursor;
+        this.pos--;
+        this.cursor = this.cursor.prev();
+        return this.update.value();
       } // previous()
 
       public void remove() {
@@ -135,14 +129,11 @@ public class SimpleCircularDLL<T> implements SimpleList<T> {
 
         // Update the cursor
         if (this.update == this.cursor) {
-          // STUB
+          this.cursor = this.cursor.prev();
+          this.pos--;
         } // if
-
-        // Do the real work
-        // STUB
-
+        this.update.remove();
         --SimpleCircularDLL.this.size;
-
         // Note that no more updates are possible
         this.update = null;
       } // remove()

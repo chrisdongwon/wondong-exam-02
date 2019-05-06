@@ -1,18 +1,17 @@
 package problem1;
 
 import java.io.PrintWriter;
-
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.function.BiConsumer;
-
 import utils.SimpleStack;
 import utils.Pair;
 
 /**
  * A simple implementation of binary search trees.
  */
-public class SimpleImmutableBST<K, V> implements Iterable<Pair<K,V>> {
+public class SimpleImmutableBST<K, V> implements Iterable<Pair<K, V>> {
 
   // +--------+------------------------------------------------------
   // | Fields |
@@ -47,7 +46,6 @@ public class SimpleImmutableBST<K, V> implements Iterable<Pair<K,V>> {
     this((k1, k2) -> k1.toString().compareTo(k2.toString()));
   } // SimpleBST()
 
-
   // +-------------------+-------------------------------------------
   // | SimpleMap methods |
   // +-------------------+
@@ -56,7 +54,9 @@ public class SimpleImmutableBST<K, V> implements Iterable<Pair<K,V>> {
    * Associate key with value in the tree, creating a new tree.
    */
   public SimpleImmutableBST<K, V> set(K key, V value) {
-    return null;
+    SimpleImmutableBST<K, V> newTree = new SimpleImmutableBST<K, V>(this.comparator);
+    newTree.root = this.setHelper(this.root, key, value);
+    return newTree;
   } // set(K,V)
 
   /**
@@ -84,28 +84,28 @@ public class SimpleImmutableBST<K, V> implements Iterable<Pair<K,V>> {
    * Remove a key from the tree, creating a new tree.
    */
   public SimpleImmutableBST<K, V> remove(K key) {
-    return null;
+    SimpleImmutableBST<K, V> newTree = new SimpleImmutableBST<K, V>(this.comparator);
+    newTree.root = this.removeHelper(this.root, key);
+    return newTree;
   } // remove(K)
 
   /**
-   * Apply action to each key/value pair, visiting them in alphabetical
-   * key order.
+   * Apply action to each key/value pair, visiting them in alphabetical key order.
    */
-   public void forEach(BiConsumer<? super K, ? super V> action) {
+  public void forEach(BiConsumer<? super K, ? super V> action) {
     forEach(this.root, action);
   } // forEach
- 
+
   /**
-   * Determine the size of a subtree rooted at a 
-   * particular node.
+   * Determine the size of a subtree rooted at a particular node.
    */
-  public int size(ImmutableNode<K,V> node) {
+  public int size(ImmutableNode<K, V> node) {
     if (node == null) {
       return 0;
     } else {
       return 1 + size(node.left()) + size(node.right());
     } // if/else
-  } 
+  }
   // size(ImmutableNode<K,V>)
 
   // +------------------+--------------------------------------------
@@ -115,8 +115,8 @@ public class SimpleImmutableBST<K, V> implements Iterable<Pair<K,V>> {
   /**
    * Create an iterator for the key/value pairs.
    */
-  public Iterator<Pair<K,V>> iterator() {
-    return new Iterator<Pair<K,V>>() {
+  public Iterator<Pair<K, V>> iterator() {
+    return new Iterator<Pair<K, V>>() {
       // A stack of nodes and pairs
       SimpleStack<Object> remaining = new SimpleStack<Object>(SimpleImmutableBST.this.root);
 
@@ -125,16 +125,16 @@ public class SimpleImmutableBST<K, V> implements Iterable<Pair<K,V>> {
       } // hasNext()
 
       @SuppressWarnings("unchecked")
-      public Pair<K,V> next() {
+      public Pair<K, V> next() {
         Object obj = remaining.get();
-        if (obj instanceof ImmutableNode<?,?>) {
-          ImmutableNode<K,V> node = (ImmutableNode<K,V>) obj;
+        if (obj instanceof ImmutableNode<?, ?>) {
+          ImmutableNode<K, V> node = (ImmutableNode<K, V>) obj;
           remaining.put(node.right());
           remaining.put(node.contents());
           remaining.put(node.left());
           return next();
         } else {
-          return (Pair<K,V>) obj;
+          return (Pair<K, V>) obj;
         } // ifelse
       } // next()
     }; // new Iterator
@@ -197,11 +197,11 @@ public class SimpleImmutableBST<K, V> implements Iterable<Pair<K,V>> {
     } // if/else
   } // find(K, ImmuableNode<K,V>)
 
-  /** 
-   * Apply action to all the key/value pairs in the subtree rooted
-   * at node, visiting them in alphabetical order by key.
+  /**
+   * Apply action to all the key/value pairs in the subtree rooted at node, visiting them in
+   * alphabetical order by key.
    */
-  void forEach(ImmutableNode<K,V> node, BiConsumer<? super K, ? super V> action) {
+  void forEach(ImmutableNode<K, V> node, BiConsumer<? super K, ? super V> action) {
     if (node != null) {
       forEach(node.left(), action);
       action.accept(node.key(), node.value());
@@ -213,19 +213,70 @@ public class SimpleImmutableBST<K, V> implements Iterable<Pair<K,V>> {
    * Set a key/value pair in a subtree.
    */
   ImmutableNode<K, V> setHelper(ImmutableNode<K, V> node, K key, V value) {
-    // TODO: Implement
-    return null;
+    if (node == null)
+      return new ImmutableNode<K, V>(key, value, null, null);
+    else {
+      int compare = this.comparator.compare(key, node.key());
+
+      if (compare < 0)
+        return new ImmutableNode<K, V>(node.key(), node.value(), setHelper(node.left(), key, value),
+            node.right());
+      else if (compare > 0)
+        return new ImmutableNode<K, V>(node.key(), node.value(), node.left(),
+            setHelper(node.right(), key, value));
+      else
+        return new ImmutableNode<K, V>(key, value, node.left(), node.right());
+    } // else
   } // setHelper(ImmutableNode<K,V>, K, V)
 
   /**
    * Remove a key from the subtree.
    */
   ImmutableNode<K, V> removeHelper(ImmutableNode<K, V> node, K key) {
-    // TODO: Implement
+    if (node != null) {
+      int compare = this.comparator.compare(key, node.key());
+
+      if (compare < 0) {
+        return new ImmutableNode<K, V>(node.key(), node.value(), removeHelper(node.left(), key),
+            node.right());
+      } else if (compare > 0) {
+        return new ImmutableNode<K, V>(node.key(), node.value(), node.left(),
+            removeHelper(node.right(), key));
+      } else {
+        if (node.left() == null && node.right() == null)
+          return null;
+        else if (node.left() == null)
+          return node.right();
+        else if (node.right() == null)
+          return node.left();
+        else {
+          if ((new Random()).nextInt() % 2 == 0)
+            return new ImmutableNode<K, V>(node.left().key(), node.left().value(),
+                node.left().left(), newRight(node.left().right(), node.right()));
+          else
+            return new ImmutableNode<K, V>(node.right().key(), node.right().value(), node.left(),
+                newLeft(node.right().left(), node.left()));
+        } // else
+      } // else
+    } // if
     return null;
   } // removeHelper(ImmutableNode<K,V>, K)
 
+  private ImmutableNode<K, V> newRight(ImmutableNode<K, V> leftSub, ImmutableNode<K, V> right) {
+    if (leftSub.right() == null)
+      return new ImmutableNode<K, V>(leftSub.key(), leftSub.value(), leftSub.left(), right);
+    else
+      return newRight(leftSub.right(), right);
+  } // newRight
+
+  private ImmutableNode<K, V> newLeft(ImmutableNode<K, V> rightSub, ImmutableNode<K, V> left) {
+    if (rightSub.left() == null)
+      return new ImmutableNode<K, V>(rightSub.key(), rightSub.value(), left, rightSub.right());
+    else
+      return newLeft(rightSub.left(), left);
+  } // newLeft
 } // class SimpleBST
+
 
 /**
  * Nodes in a binary search tree.
@@ -255,8 +306,7 @@ class ImmutableNode<K, V> {
   // | Constructors |
   // +--------------+
 
-  public ImmutableNode(K key, V value, ImmutableNode<K, V> left,
-      ImmutableNode<K, V> right) {
+  public ImmutableNode(K key, V value, ImmutableNode<K, V> left, ImmutableNode<K, V> right) {
     this.contents = new Pair<K, V>(key, value);
     this.left = left;
     this.right = right;
@@ -266,7 +316,7 @@ class ImmutableNode<K, V> {
   // | Methods |
   // +---------+
 
-  public Pair<K,V> contents() {
+  public Pair<K, V> contents() {
     return this.contents;
   } // contents()
 

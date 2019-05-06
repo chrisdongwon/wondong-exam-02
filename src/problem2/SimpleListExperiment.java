@@ -1,7 +1,6 @@
 package problem2;
 
 import utils.SimpleList;
-
 import java.io.PrintWriter;
 import java.util.ListIterator;
 import java.util.Random;
@@ -24,8 +23,7 @@ public class SimpleListExperiment {
   /**
    * Add an element using an iterator.
    */
-  static void add(PrintWriter pen, ListIterator<String> it, String val)
-      throws Exception {
+  static void add(PrintWriter pen, ListIterator<String> it, String val) throws Exception {
     pen.println("Add \"" + val + "\" at position " + it.nextIndex());
     it.add(val);
   } // add(PrintWriter)
@@ -44,8 +42,8 @@ public class SimpleListExperiment {
   /**
    * Add a variety of elements, describing what happens.
    */
-  static void addExperiment(PrintWriter pen, SimpleList<String> lst, 
-      String[] strings) throws Exception {
+  static void addExperiment(PrintWriter pen, SimpleList<String> lst, String[] strings)
+      throws Exception {
     ListIterator<String> lit = lst.listIterator();
 
     for (String str : strings) {
@@ -58,8 +56,8 @@ public class SimpleListExperiment {
   /**
    * Add a variety of elements, without describing what happens
    */
-  static void addStrings(PrintWriter pen, SimpleList<String> lst,
-      String[] strings) throws Exception {
+  static void addStrings(PrintWriter pen, SimpleList<String> lst, String[] strings)
+      throws Exception {
     ListIterator<String> lit = lst.listIterator();
 
     for (String str : strings) {
@@ -116,8 +114,7 @@ public class SimpleListExperiment {
    *
    * @pre n
    */
-  static void randomWalkRemove(PrintWriter pen, SimpleList<String> lst,
-      int n) {
+  static void randomWalkRemove(PrintWriter pen, SimpleList<String> lst, int n) {
     ListIterator<String> lit = lst.listIterator();
 
     for (int i = 0; i < n; i++) {
@@ -165,8 +162,7 @@ public class SimpleListExperiment {
     pen.println();
   } // expt3(PrintWriter, SimpleList<String>
 
-  static void expt4(PrintWriter pen, SimpleList<String> lst, int n) 
-      throws Exception {
+  static void expt4(PrintWriter pen, SimpleList<String> lst, int n) throws Exception {
     pen.println("Experiment 4: Removing elements with a random walk.");
     addStrings(pen, lst, new String[] {"A", "B", "C", "D", "E", "F", "G"});
     try {
@@ -179,11 +175,13 @@ public class SimpleListExperiment {
 
 } // class SimpleListExperiment
 
+
 /**
  * A simple counter.
  */
 class Counter {
   int val = 0;
+
   int get() {
     return val++;
   } // get()

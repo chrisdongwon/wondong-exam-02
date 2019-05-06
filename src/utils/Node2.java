@@ -8,7 +8,7 @@ public class Node2<T> {
   // | Fields |
   // +--------+
 
-  /** 
+  /**
    * The previous node.
    */
   Node2<T> prev;
@@ -27,7 +27,7 @@ public class Node2<T> {
   // | Constructors |
   // +--------------+
 
-  /** 
+  /**
    * Create a new node.
    */
   public Node2(Node2<T> prev, T value, Node2<T> next) {
@@ -36,12 +36,12 @@ public class Node2<T> {
     this.next = next;
   } // Node2(Node2<T>, T, Node2<T>)
 
-   /**
-    * Create a new node with no links.
-    */
-   private Node2(T value) {
-     this(null, value, null);
-   } // Node2(T)
+  /**
+   * Create a new node with no links.
+   */
+  private Node2(T value) {
+    this(null, value, null);
+  } // Node2(T)
 
   // +-----------------+---------------------------------------------
   // | Factory methods |
@@ -62,7 +62,7 @@ public class Node2<T> {
   // +---------+
 
   /**
-   * Insert a new value after this node.  Returns the new node.
+   * Insert a new value after this node. Returns the new node.
    */
   public Node2<T> insertAfter(T value) {
     Node2<T> tmp = new Node2<T>(this, value, this.next);
@@ -72,7 +72,7 @@ public class Node2<T> {
   } // insertAfter
 
   /**
-   * Insert a new value before this node.  Returns the new node.
+   * Insert a new value before this node. Returns the new node.
    */
   public Node2<T> insertBefore(T value) {
     Node2<T> tmp = new Node2<T>(this.prev, value, this);
@@ -80,14 +80,14 @@ public class Node2<T> {
     this.prev = tmp;
     return tmp;
   } // insertBefore
-  
+
   /**
    * Get the next node.
    */
   public Node2<T> next() {
     return this.next;
   } // next()
-  
+
   /**
    * Get the previous node.
    */
@@ -109,7 +109,7 @@ public class Node2<T> {
     next.prev = prev;
     prev.next = next;
   } // remove()
-  
+
   /**
    * Set the value in the node.
    */
@@ -118,7 +118,7 @@ public class Node2<T> {
     this.value = value;
     return oldValue;
   } // setValue(T)
-   
+
   /**
    * Get the value in the node.
    */

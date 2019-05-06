@@ -10,8 +10,7 @@ import utils.SimpleStack;
 /**
  * A simple implementation of tries.
  */
-public class Trie
-    implements SimpleMap<String, String>, Iterable<Pair<String, String>> {
+public class Trie implements SimpleMap<String, String>, Iterable<Pair<String, String>> {
 
   // +--------+------------------------------------------------------
   // | Fields |
@@ -40,19 +39,39 @@ public class Trie
   } // Trie()
 
   // +-------------------+-------------------------------------------
-  // | SimpleMap methods |
+  // | Trie methods |
   // +-------------------+
 
   @Override
   public String set(String key, String value) {
-    // TODO Auto-generated method stub
-    return null;
+    if (key == null)
+      throw new NullPointerException("key cannot be null");
+
+    TrieNode current = this.root;
+
+    for (int i = 0; i < key.length(); i++) {
+      char ch = key.charAt(i);
+      if (current.next(ch) == null)
+        current.setNext(ch, new TrieNode(key.substring(0, i), null));
+
+      current = current.next(ch);
+    } // for
+
+    String result = current.value();
+    current.setValue(value);
+    return result;
   } // set(String,String)
 
   @Override
   public String get(String key) {
-    // TODO Auto-generated method stub
-    return null;
+    if (key == null)
+      throw new NullPointerException("key cannot be null");
+
+    TrieNode result = this.find(key);
+    if (result == null)
+      throw new IndexOutOfBoundsException("key not found");
+
+    return result.value();
   } // get(String)
 
   @Override
@@ -62,19 +81,33 @@ public class Trie
 
   @Override
   public boolean containsKey(String key) {
-    // TODO Auto-generated method stub
-    return false;
+    return this.find(key) != null;
   } // containsKey(String)
 
   @Override
   public String remove(String key) {
-    // TODO Auto-generated method stub
-    return null;
+    if (key == null)
+      throw new NullPointerException("key cannot be null");
+
+    TrieNode prev = this.root;
+    TrieNode current = this.root;
+
+    for (int i = 0; i < key.length(); i++) {
+      char ch = key.charAt(i);
+      if (current.next(ch) != null) {
+        prev = current;
+        current = current.next(ch);
+      } else
+        return null;
+    } // for
+
+    String result = current.value();
+    prev.setNext(key.charAt(key.length() - 1), null);
+    return result;
   } // remove(String)
 
   /**
-   * Iterate all the keys in the tree, returning them in alphabetical order by
-   * key.
+   * Iterate all the keys in the tree, returning them in alphabetical order by key.
    */
   public Iterator<String> keys() {
     return MiscUtils.transform(this.iterator(), (pair) -> pair.key());
@@ -82,8 +115,7 @@ public class Trie
 
   @Override
   /**
-   * Iterate all the values in the tree, returning them in some undetermined
-   * order.
+   * Iterate all the values in the tree, returning them in some undetermined order.
    */
   public Iterator<String> values() {
     return MiscUtils.transform(this.iterator(), (pair) -> pair.value());
@@ -102,8 +134,7 @@ public class Trie
 
   @Override
   /**
-   * Iterate all the key/value pairs in the tree, returning them in alphabetical
-   * order by key.
+   * Iterate all the key/value pairs in the tree, returning them in alphabetical order by key.
    */
   public Iterator<Pair<String, String>> iterator() {
     return new Iterator<Pair<String, String>>() {
@@ -210,9 +241,14 @@ public class Trie
     TrieNode current = this.root;
     for (int i = 0; i < len; i++) {
       char ch = key.charAt(i);
-      // TODO: Finish implementation
+
+      if (current.next(ch) != null)
+        current = current.next(ch);
+      else
+        return null;
     } // for
-    return null;
+
+    return current;
   } // find
 
 } // class Trie
