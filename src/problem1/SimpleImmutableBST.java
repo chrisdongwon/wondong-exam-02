@@ -3,7 +3,6 @@ package problem1;
 import java.io.PrintWriter;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.Random;
 import java.util.function.BiConsumer;
 import utils.SimpleStack;
 import utils.Pair;
@@ -250,31 +249,21 @@ public class SimpleImmutableBST<K, V> implements Iterable<Pair<K, V>> {
         else if (node.right() == null)
           return node.left();
         else {
-          if ((new Random()).nextInt() % 2 == 0)
-            return new ImmutableNode<K, V>(node.left().key(), node.left().value(),
-                node.left().left(), newRight(node.left().right(), node.right()));
-          else
-            return new ImmutableNode<K, V>(node.right().key(), node.right().value(), node.left(),
-                newLeft(node.right().left(), node.left()));
+          return helper(node.left(), node.right());
         } // else
       } // else
     } // if
     return null;
   } // removeHelper(ImmutableNode<K,V>, K)
 
-  private ImmutableNode<K, V> newRight(ImmutableNode<K, V> leftSub, ImmutableNode<K, V> right) {
-    if (leftSub.right() == null)
-      return new ImmutableNode<K, V>(leftSub.key(), leftSub.value(), leftSub.left(), right);
-    else
-      return newRight(leftSub.right(), right);
-  } // newRight
+  private ImmutableNode<K, V> helper(ImmutableNode<K, V> left, ImmutableNode<K, V> right) {
+    if (right == null)
+      return left;
 
-  private ImmutableNode<K, V> newLeft(ImmutableNode<K, V> rightSub, ImmutableNode<K, V> left) {
-    if (rightSub.left() == null)
-      return new ImmutableNode<K, V>(rightSub.key(), rightSub.value(), left, rightSub.right());
-    else
-      return newLeft(rightSub.left(), left);
-  } // newLeft
+    return new ImmutableNode<K, V>(right.key(), right.value(), helper(left, right.left()),
+        right.right());
+  }
+
 } // class SimpleBST
 
 
